@@ -2,10 +2,12 @@
 #include <string>
 
 bool isValid(std::string sroot){
+	int numStops = 0;
 	for (size_t i = 0; i < sroot.length(); i++){ // iterates through each character of the input string
-		if ((!isdigit(sroot[i]) && sroot[i] != '.') || sroot[i] == '-'){ // checks each character to see if it is numeric or a decimal point, also checks that the number is not negative 
-			std::cout << "You did not enter a valid number" << std::endl;
-			system("pause");
+		if (sroot[i] == '.'){
+			numStops++;
+		}
+		if ((!isdigit(sroot[i]) && sroot[i] != '.') || sroot[i] == '-' || numStops > 1){ // checks each character to see if it is numeric or a decimal point, also checks that the number is not negative or contains multiple decimal points
 			return false;
 		}
 	}
@@ -26,6 +28,8 @@ int main() {
 	std::cout << "What root would you like to approximate?" << std::endl;
 	getline(std::cin, sroot); // gets the users input
 	if (isValid(sroot) == false){//checks the validity of the input
+		std::cout << "You did not enter a valid number" << std::endl;
+		system("pause");
 		return 1;
 	}
 	root = stof(sroot);// converts the input to a number
